@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rishi Prakash Mahapatra | Software Engineer</title>
+    <meta name="description" content="Portfolio of Rishi Prakash Mahapatra, a Full Stack Developer & AI Enthusiast.">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        body: ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        bgPrimary: '#050505',
+                        bgSecondary: '#0A0A0A',
+                        cardBg: '#111111',
+                        accentWhite: '#F4F4F5',
+                        accentBlue: '#3B82F6',
+                        accentCyan: '#22d3ee',
+                        accentViolet: '#8b5cf6',
+                        textMain: '#EDEDED',
+                        textMuted: '#878787',
+                        borderSubtle: '#1A1A1A'
+                    },
+                    animation: {
+                        'blob': 'blob 10s infinite',
+                        'scroll': 'scroll 25s linear infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Resets & Lenis Smooth Scroll Setup */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
+        
+        body {
+            /* Rich Radial Background */
+            background-color: #050505;
+            background-image: radial-gradient(circle at 50% 0%, #151522 0%, #050505 70%);
+            background-attachment: fixed;
+            color: #EDEDED;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Enhanced Noise Texture Overlay */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: -1; opacity: 0.06;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Custom Cursor */
+        #custom-cursor {
+            position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+            border-radius: 50%; background-color: white; mix-blend-mode: difference;
+            pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, border 0.3s ease;
+        }
+        
+        #custom-cursor-follower {
+            position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+            border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.3);
+            pointer-events: none; z-index: 9998; transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+        }
+
+        #custom-cursor.hovering {
+            width: 60px; height: 60px; background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5); backdrop-filter: blur(2px);
+        }
+
+        /* Nav Glass Panel */
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.4); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Typography */
+        .text-glow { text-shadow: 0 0 60px rgba(139, 92, 246, 0.3); }
+        .gradient-text {
+            background: linear-gradient(to right, #22d3ee, #8b5cf6);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: gradientShift 5s ease infinite;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+
+        /* --- Pure CSS 3D Flip Cards --- */
+        .flip-card {
+            background-color: transparent;
+            perspective: 1500px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+        }
+
+        .flip-card-front {
+            background-color: #0d0d0d;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg) translateZ(1px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Smooth Scrollbar for card backs */
+        .card-scroll::-webkit-scrollbar { width: 4px; }
+        .card-scroll::-webkit-scrollbar-track { background: transparent; }
+        .card-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .card-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+        /* Marquee Mask */
+        .scroller-mask {
+            -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+            mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+        }
+
+        /* Global scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        
+        /* Grid Background - Enhanced opacity for better texture */
+        .bg-grid {
+            background-size: 60px 60px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black, transparent 70%);
+            -webkit-mask-image: radial-gradient(circle at center, black, transparent 70%);
+        }
+        
+        .hero-text-wrap { overflow: hidden; }
+        .magnetic { display: inline-block; }
+    </style>
+</head>
+<body class="antialiased selection:bg-accentViolet selection:text-white font-body relative">
+
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-follower"></div>
+
+    <div class="noise-overlay"></div>
+    <div class="fixed inset-0 bg-grid z-[-1] pointer-events-none opacity-60"></div>
+    
+    <div class="fixed inset-0 z-[-2] pointer-events-none overflow-hidden">
+        <div class="absolute w-[600px] h-[600px] bg-accentViolet/20 blur-[130px] rounded-full top-[-10%] left-[-10%] animate-blob"></div>
+        <div class="absolute w-[700px] h-[700px] bg-accentCyan/15 blur-[150px] rounded-full bottom-[-10%] right-[-10%] animate-blob" style="animation-delay: 2s;"></div>
+        <div class="absolute w-[400px] h-[400px] bg-blue-500/10 blur-[120px] rounded-full top-[40%] left-[40%] animate-blob" style="animation-delay: 4s;"></div>
+    </div>
+
+    <nav class="fixed top-0 w-full z-50 glass-panel py-5 transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold tracking-tight text-white hoverable font-sans">Rishi Prakash.</a>
+            <div class="hidden md:flex space-x-10 text-sm font-medium text-textMuted">
+                <a href="#about" class="hover:text-white transition-colors hoverable relative group">About<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accentCyan transition-all group-hover:w-full"></span></a>
+                <a href="#projects" class="hover:text-white transition-colors hoverable relative group">Projects<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accentCyan transition-all group-hover:w-full"></span></a>
+                <a href="#skills" class="hover:text-white transition-colors hoverable relative group">Skills<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accentCyan transition-all group-hover:w-full"></span></a>
+                <a href="#experience" class="hover:text-white transition-colors hoverable relative group">Experience<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accentCyan transition-all group-hover:w-full"></span></a>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-6">
+                <a href="media\rishi_prakash_mohapatra.pdf" download class="magnetic flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/5 text-xs font-semibold text-white hover:bg-white/10 hover:border-accentCyan/50 transition-all duration-300 hoverable shadow-lg shadow-black/20">
+                    Resume <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                </a>
+                <a href="#contact" class="magnetic flex items-center text-sm font-medium text-white hover:text-accentCyan transition-colors hoverable">
+                    Let's Connect <i data-lucide="arrow-up-right" class="inline w-4 h-4 ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="w-full">
+        <section id="hero" class="relative min-h-screen flex items-center pt-20 px-6 overflow-hidden">
+            <div class="max-w-6xl mx-auto w-full z-10">
+                <div class="hero-text-wrap mb-6">
+                    <p class="hero-anim text-textMuted text-sm md:text-base font-medium tracking-wide uppercase flex items-center gap-3">
+                        <span class="w-10 h-[1px] bg-accentCyan"></span> Portfolio
+                    </p>
+                </div>
+                <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-6 leading-[1.05] text-white font-sans text-glow">
+                    <div class="hero-text-wrap"><div class="hero-anim gradient-text pb-2">Software Engineer.</div></div>
+                    <div class="hero-text-wrap"><div class="hero-anim text-textMuted/80">Full Stack Developer.</div></div>
+                    <div class="hero-text-wrap"><div class="hero-anim">AI Solutions Builder.</div></div>
+                </h1>
+                <div class="hero-text-wrap mt-8">
+                    <p class="hero-anim text-lg md:text-xl text-textMuted max-w-2xl font-light leading-relaxed">
+                        Hi, I'm <span class="text-white font-medium">Rishi Prakash Mahapatra</span>. I specialize in designing intelligent software systems, scalable web applications, and leveraging artificial intelligence to solve complex problems.
+                    </p>
+                </div>
+                <div class="hero-text-wrap mt-12">
+                    <div class="hero-anim flex flex-col sm:flex-row items-start sm:items-center gap-8">
+                        <div class="magnetic">
+                            <a href="#projects" class="px-8 py-4 rounded-full bg-white text-black font-semibold text-sm hover:bg-gray-200 transition-all duration-300 hoverable flex items-center gap-2 shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                                View Selected Work <i data-lucide="arrow-down" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                        <div class="flex gap-6 items-center py-4">
+                            <a href="https://github.com/YOUR_USERNAME" target="_blank" class="magnetic text-textMuted hover:text-white transition-colors hoverable"><i data-lucide="github" class="w-6 h-6"></i></a>
+                            <a href="https://www.linkedin.com/in/rishi-prakash-mohapatra-55b3a82b0/" target="_blank" class="magnetic text-textMuted hover:text-accentCyan transition-colors hoverable"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                            <a href="mailto:mohapatrarishiprakash@gmail.com" class="magnetic text-textMuted hover:text-accentViolet transition-colors hoverable"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-32 px-6 relative border-t border-white/5 bg-bgSecondary/30">
+            <div class="max-w-6xl mx-auto gs-reveal">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+                    <div class="lg:col-span-4">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white font-sans tracking-tight">About Me</h2>
+                    </div>
+                    <div class="lg:col-span-8 text-base md:text-lg text-textMuted font-light leading-relaxed space-y-8">
+                        <p>I am a <strong class="text-white font-medium">B.Tech undergraduate</strong> pursuing <strong class="text-white font-medium">Computer Science and Engineering</strong> at the <strong class="text-white font-medium">SRM Institute of Science and Technology, Ramapuram Campus</strong>.</p>
+                        <p>My engineering journey is driven by a deep curiosity for how things work and a passion for building robust digital products. I focus heavily on full-stack web development and artificial intelligence, thriving in environments that challenge me to architect complete solutions from backend logic to frontend user experience.</p>
+                        <p>Beyond writing code, I am highly involved in technical communities and event organization. As a core team lead for large-scale college technical festivals, I've honed my skills in leadership, product thinking, and collaborative problem-solving.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-32 px-6 relative border-t border-white/5 z-10">
+            <div class="max-w-6xl mx-auto">
+                <div class="gs-reveal mb-20 flex flex-col md:flex-row justify-between items-end gap-6">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white font-sans mb-4 tracking-tight">Selected Work</h2>
+                        <p class="text-textMuted max-w-xl font-light text-lg">A comprehensive collection of full-stack platforms, AI solutions, and administrative frameworks. <span class="text-accentCyan font-medium">Hover over cards for technical insights.</span></p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    
+                    <div class="flip-card w-full min-h-[420px] gs-reveal hoverable group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10 text-accentCyan">
+                                        <i data-lucide="briefcase" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-xs font-bold text-accentCyan uppercase tracking-widest mb-3">Project 01</div>
+                                    <h3 class="text-2xl font-bold text-white mb-4 font-sans">Placement Advisor</h3>
+                                    <p class="text-textMuted text-base leading-relaxed font-light">An intelligent full-stack recruitment platform designed to streamline hiring processes through AI-driven candidate-job matching, resume analysis, and automated workflows.</p>
+                                </div>
+                                <div class="flex items-center text-xs font-medium text-white/50 tracking-wider uppercase mt-6 group-hover:text-accentCyan transition-colors">
+                                    Analyze Project <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back p-8 bg-gradient-to-br from-[#1a1a2e] to-[#050505] flex flex-col overflow-y-auto card-scroll">
+                                <h3 class="text-xl font-bold text-white mb-4 font-sans border-b border-white/10 pb-3">Technical Breakdown</h3>
+                                <div class="space-y-4 text-sm font-light text-textMuted">
+                                    <p><strong class="text-white">The Problem:</strong> Traditional systems rely heavily on manual resume screening, causing poor matching and inefficiency.</p>
+                                    <p><strong class="text-white">My Impact:</strong> Designed backend architecture, built REST APIs, and created dashboards. Improved hiring efficiency by automating evaluations.</p>
+                                    <div>
+                                        <strong class="text-white block mb-2">Key Features:</strong>
+                                        <ul class="list-disc list-inside space-y-1 ml-1 text-xs">
+                                            <li>AI-based Job Matching & Resume Analysis</li>
+                                            <li>Application Tracking System (ATS)</li>
+                                            <li>Role-Based Authentication Dashboards</li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-2">
+                                        <strong class="text-white block mb-2">Tech Stack:</strong>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Python</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">FastAPI</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">React.js</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">MongoDB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card w-full min-h-[420px] gs-reveal hoverable group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10 text-accentViolet">
+                                        <i data-lucide="clock" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-xs font-bold text-accentViolet uppercase tracking-widest mb-3">Project 02</div>
+                                    <h3 class="text-2xl font-bold text-white mb-4 font-sans">Time Tracker Pro</h3>
+                                    <p class="text-textMuted text-base leading-relaxed font-light">A productivity tracking application designed to help students and professionals monitor their daily activities and improve time management through analytics-driven insights.</p>
+                                </div>
+                                <div class="flex items-center text-xs font-medium text-white/50 tracking-wider uppercase mt-6 group-hover:text-accentViolet transition-colors">
+                                    Analyze Project <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back p-8 bg-gradient-to-br from-[#2a1b3d] to-[#050505] flex flex-col overflow-y-auto card-scroll">
+                                <h3 class="text-xl font-bold text-white mb-4 font-sans border-b border-white/10 pb-3">Technical Breakdown</h3>
+                                <div class="space-y-4 text-sm font-light text-textMuted">
+                                    <p><strong class="text-white">The Problem:</strong> Lack of visibility into productivity patterns disrupts work habits and goal completion.</p>
+                                    <p><strong class="text-white">My Impact:</strong> Developed core logic, DB integration, and designed analytics workflows providing actionable behavioral insights.</p>
+                                    <div>
+                                        <strong class="text-white block mb-2">Key Features:</strong>
+                                        <ul class="list-disc list-inside space-y-1 ml-1 text-xs">
+                                            <li>Session & Goal Tracking</li>
+                                            <li>Productivity Analytics Dashboard</li>
+                                            <li>Automated Weekly Reports</li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-2">
+                                        <strong class="text-white block mb-2">Tech Stack:</strong>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Python</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Java</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">SQLite</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card w-full min-h-[420px] gs-reveal hoverable group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10 text-blue-400">
+                                        <i data-lucide="hand" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Project 03</div>
+                                    <h3 class="text-2xl font-bold text-white mb-4 font-sans">Prativimbh AI</h3>
+                                    <p class="text-textMuted text-base leading-relaxed font-light">An AI-powered computer vision system that enables users to write in the air using fingertip tracking and gesture recognition technology.</p>
+                                </div>
+                                <div class="flex items-center text-xs font-medium text-white/50 tracking-wider uppercase mt-6 group-hover:text-blue-400 transition-colors">
+                                    Analyze Project <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back p-8 bg-gradient-to-br from-[#0f2027] to-[#050505] flex flex-col overflow-y-auto card-scroll">
+                                <h3 class="text-xl font-bold text-white mb-4 font-sans border-b border-white/10 pb-3">Technical Breakdown</h3>
+                                <div class="space-y-4 text-sm font-light text-textMuted">
+                                    <p><strong class="text-white">The Problem:</strong> Digital writing hardware (smart boards) is expensive and often inaccessible for budget-constrained educators.</p>
+                                    <p><strong class="text-white">My Impact:</strong> Handled concept design and system architecture, creating a highly affordable, hardware-agnostic EdTech solution.</p>
+                                    <div>
+                                        <strong class="text-white block mb-2">Key Features:</strong>
+                                        <ul class="list-disc list-inside space-y-1 ml-1 text-xs">
+                                            <li>Real-Time Gesture Recognition</li>
+                                            <li>Computer Vision Hand Tracking</li>
+                                            <li>Digital Teaching Assistance</li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-2">
+                                        <strong class="text-white block mb-2">Tech Stack:</strong>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">AI / CV</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Gesture Rec</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card w-full min-h-[420px] gs-reveal hoverable group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10 text-emerald-400">
+                                        <i data-lucide="leaf" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-xs font-bold text-emerald-400 uppercase tracking-widest mb-3">Project 04</div>
+                                    <h3 class="text-2xl font-bold text-white mb-4 font-sans">AI Life Cycle Tool</h3>
+                                    <p class="text-textMuted text-base leading-relaxed font-light">An AI-powered sustainability framework designed to assess environmental impact and optimize resource utilization within mining and metallurgy industries.</p>
+                                </div>
+                                <div class="flex items-center text-xs font-medium text-white/50 tracking-wider uppercase mt-6 group-hover:text-emerald-400 transition-colors">
+                                    Analyze Project <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back p-8 bg-gradient-to-br from-[#062016] to-[#050505] flex flex-col overflow-y-auto card-scroll">
+                                <h3 class="text-xl font-bold text-white mb-4 font-sans border-b border-white/10 pb-3">Technical Breakdown</h3>
+                                <div class="space-y-4 text-sm font-light text-textMuted">
+                                    <p><strong class="text-white">The Problem:</strong> Industrial mining struggles with monitoring resource efficiency and predicting environmental risks effectively.</p>
+                                    <p><strong class="text-white">My Impact:</strong> Spearheaded solution design and AI workflow planning to promote environmentally conscious decision-making.</p>
+                                    <div>
+                                        <strong class="text-white block mb-2">Key Features:</strong>
+                                        <ul class="list-disc list-inside space-y-1 ml-1 text-xs">
+                                            <li>Lifecycle Impact Prediction</li>
+                                            <li>Anomaly Detection</li>
+                                            <li>Resource Optimization AI</li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-2">
+                                        <strong class="text-white block mb-2">Tech Stack:</strong>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Machine Learning</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Deep Learning</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Data Analytics</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card w-full min-h-[420px] gs-reveal hoverable group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10 text-orange-400">
+                                        <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-xs font-bold text-orange-400 uppercase tracking-widest mb-3">Project 05</div>
+                                    <h3 class="text-2xl font-bold text-white mb-4 font-sans">University Management</h3>
+                                    <p class="text-textMuted text-base leading-relaxed font-light">A comprehensive academic management solution developed to streamline student information management and complex administrative processes.</p>
+                                </div>
+                                <div class="flex items-center text-xs font-medium text-white/50 tracking-wider uppercase mt-6 group-hover:text-orange-400 transition-colors">
+                                    Analyze Project <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back p-8 bg-gradient-to-br from-[#2c150c] to-[#050505] flex flex-col overflow-y-auto card-scroll">
+                                <h3 class="text-xl font-bold text-white mb-4 font-sans border-b border-white/10 pb-3">Technical Breakdown</h3>
+                                <div class="space-y-4 text-sm font-light text-textMuted">
+                                    <p><strong class="text-white">The Problem:</strong> Manual record management leads to extreme duplication, errors, and bloated administrative workloads.</p>
+                                    <p><strong class="text-white">My Impact:</strong> Programmed core system modules and database logic handling strictly adhering to OOP paradigms.</p>
+                                    <div>
+                                        <strong class="text-white block mb-2">Key Features:</strong>
+                                        <ul class="list-disc list-inside space-y-1 ml-1 text-xs">
+                                            <li>Centralized Record Management</li>
+                                            <li>Secure Data Storage/Retrieval</li>
+                                            <li>Administrative Modules</li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-2">
+                                        <strong class="text-white block mb-2">Tech Stack:</strong>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">C++</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">OOP</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">File Handling</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card w-full min-h-[420px] gs-reveal hoverable group">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10 text-pink-400">
+                                        <i data-lucide="filter" class="w-6 h-6"></i>
+                                    </div>
+                                    <div class="text-xs font-bold text-pink-400 uppercase tracking-widest mb-3">Project 06</div>
+                                    <h3 class="text-2xl font-bold text-white mb-4 font-sans">Data Filter System</h3>
+                                    <p class="text-textMuted text-base leading-relaxed font-light">A highly efficient Python-based utility developed for cleaning, organizing, and processing large-scale structured datasets automatically.</p>
+                                </div>
+                                <div class="flex items-center text-xs font-medium text-white/50 tracking-wider uppercase mt-6 group-hover:text-pink-400 transition-colors">
+                                    Analyze Project <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                                </div>
+                            </div>
+                            <div class="flip-card-back p-8 bg-gradient-to-br from-[#2a0e1c] to-[#050505] flex flex-col overflow-y-auto card-scroll">
+                                <h3 class="text-xl font-bold text-white mb-4 font-sans border-b border-white/10 pb-3">Technical Breakdown</h3>
+                                <div class="space-y-4 text-sm font-light text-textMuted">
+                                    <p><strong class="text-white">The Problem:</strong> Raw datasets are plagued with inconsistencies and duplication, severely delaying downstream analysis.</p>
+                                    <p><strong class="text-white">My Impact:</strong> Developed the data processing workflows and filtering algorithms, slashing manual preparation time and elevating dataset purity.</p>
+                                    <div>
+                                        <strong class="text-white block mb-2">Key Features:</strong>
+                                        <ul class="list-disc list-inside space-y-1 ml-1 text-xs">
+                                            <li>Automated Data Cleaning</li>
+                                            <li>Structured Processing Pipeline</li>
+                                            <li>Dataset Organization</li>
+                                        </ul>
+                                    </div>
+                                    <div class="pt-2">
+                                        <strong class="text-white block mb-2">Tech Stack:</strong>
+                                        <div class="flex flex-wrap gap-2">
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Python</span>
+                                            <span class="px-2.5 py-1 bg-white/10 rounded-md text-xs text-white">Data Structures</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-32 px-6 relative border-t border-white/5 bg-bgSecondary/30 overflow-hidden">
+            <div class="absolute top-1/2 right-1/4 w-96 h-96 bg-accentCyan/10 blur-[100px] rounded-full pointer-events-none"></div>
+            
+            <div class="max-w-6xl mx-auto gs-reveal relative z-10">
+                <div class="mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white font-sans tracking-tight mb-4">Technical Arsenal</h2>
+                    <p class="text-textMuted font-light text-lg max-w-xl leading-relaxed">A visualization of the languages, frameworks, and methodologies I use to construct reliable software architectures.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    
+                    <div class="md:col-span-2 p-8 rounded-3xl bg-[#0d0d0d] border border-white/5 hover:border-white/10 transition-colors group relative overflow-hidden">
+                        <div class="absolute -right-20 -top-20 w-48 h-48 bg-accentCyan/10 blur-[50px] rounded-full group-hover:bg-accentCyan/20 transition-all duration-700 pointer-events-none"></div>
+                        <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-widest flex items-center gap-2 relative z-10">
+                            <i data-lucide="terminal" class="w-4 h-4 text-accentCyan"></i> Core Languages
+                        </h3>
+                        <div class="flex flex-wrap gap-3 relative z-10">
+                            <div class="px-5 py-2.5 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5 hover:border-accentCyan/30 flex items-center gap-2 cursor-default hoverable shadow-lg">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" class="w-5 h-5" alt="Python"/>
+                                <span class="text-white/90 text-sm font-medium">Python</span>
+                            </div>
+                            <div class="px-5 py-2.5 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5 hover:border-accentCyan/30 flex items-center gap-2 cursor-default hoverable shadow-lg">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" class="w-5 h-5" alt="C++"/>
+                                <span class="text-white/90 text-sm font-medium">C++ & C</span>
+                            </div>
+                            <div class="px-5 py-2.5 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5 hover:border-accentCyan/30 flex items-center gap-2 cursor-default hoverable shadow-lg">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" class="w-5 h-5" alt="Java"/>
+                                <span class="text-white/90 text-sm font-medium">Java</span>
+                            </div>
+                            <div class="px-5 py-2.5 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5 hover:border-accentCyan/30 flex items-center gap-2 cursor-default hoverable shadow-lg">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" class="w-5 h-5" alt="JS"/>
+                                <span class="text-white/90 text-sm font-medium">JavaScript</span>
+                            </div>
+                            <div class="px-5 py-2.5 bg-white/5 hover:bg-white/10 transition-colors rounded-xl border border-white/5 hover:border-accentCyan/30 flex items-center gap-2 cursor-default hoverable shadow-lg">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" class="w-5 h-5" alt="TS"/>
+                                <span class="text-white/90 text-sm font-medium">TypeScript</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-8 rounded-3xl bg-[#0d0d0d] border border-white/5 hover:border-white/10 transition-colors group relative overflow-hidden">
+                        <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-accentViolet/10 blur-[40px] rounded-full group-hover:bg-accentViolet/20 transition-all duration-700 pointer-events-none"></div>
+                        <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-widest flex items-center gap-2 relative z-10">
+                            <i data-lucide="database" class="w-4 h-4 text-accentViolet"></i> Data & Cloud
+                        </h3>
+                        <div class="flex flex-col gap-3 relative z-10">
+                            <div class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/5 flex items-center gap-3">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" class="w-5 h-5" alt="MongoDB"/>
+                                <span class="text-white/80 text-sm">MongoDB</span>
+                            </div>
+                            <div class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/5 flex items-center gap-3">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" class="w-5 h-5" alt="SQLite"/>
+                                <span class="text-white/80 text-sm">SQLite & SQL</span>
+                            </div>
+                            <div class="w-full px-4 py-3 bg-white/5 rounded-xl border border-white/5 flex items-center gap-3">
+                                <i data-lucide="cloud" class="w-5 h-5 text-blue-400"></i>
+                                <span class="text-white/80 text-sm">Cloud Computing Basics</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-3 p-8 rounded-3xl bg-[#0d0d0d] border border-white/5 hover:border-white/10 transition-colors relative overflow-hidden group">
+                        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-32 bg-blue-500/5 blur-[80px] rounded-full group-hover:bg-blue-500/10 transition-all duration-700 pointer-events-none"></div>
+                        <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-widest flex items-center gap-2 relative z-10">
+                            <i data-lucide="layout" class="w-4 h-4 text-blue-400"></i> Web Technologies & Frameworks
+                        </h3>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+                            <div class="p-4 bg-white/5 border border-white/5 rounded-xl flex items-center gap-3 hover:bg-white/10 transition-colors">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" class="w-6 h-6" alt="React"/>
+                                <span class="text-white/90 text-sm font-medium">React.js</span>
+                            </div>
+                            <div class="p-4 bg-white/5 border border-white/5 rounded-xl flex items-center gap-3 hover:bg-white/10 transition-colors">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" class="w-6 h-6 filter invert" alt="Next.js"/>
+                                <span class="text-white/90 text-sm font-medium">Next.js</span>
+                            </div>
+                            <div class="p-4 bg-white/5 border border-white/5 rounded-xl flex items-center gap-3 hover:bg-white/10 transition-colors">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" class="w-6 h-6" alt="FastAPI"/>
+                                <span class="text-white/90 text-sm font-medium">FastAPI</span>
+                            </div>
+                            <div class="p-4 bg-white/5 border border-white/5 rounded-xl flex items-center gap-3 hover:bg-white/10 transition-colors">
+                                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" class="w-6 h-6" alt="Tailwind"/>
+                                <span class="text-white/90 text-sm font-medium">Tailwind CSS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="w-full mt-12 scroller-mask relative z-10">
+                    <div class="flex w-[200%] animate-scroll hover:[animation-play-state:paused] hoverable">
+                        <div class="flex w-1/2 justify-around items-center px-4 gap-8">
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="git-branch" class="w-5 h-5"></i> Git & GitHub</span>
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="network" class="w-5 h-5"></i> Data Structures & Algorithms</span>
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="boxes" class="w-5 h-5"></i> Object-Oriented Programming</span>
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="shield-check" class="w-5 h-5"></i> Kali Linux & Ethical Hacking</span>
+                            <!-- <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="server-cog" class="w-5 h-5"></i> REST APIs</span> -->
+                        </div>
+                        <div class="flex w-1/2 justify-around items-center px-4 gap-8">
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="git-branch" class="w-5 h-5"></i> Git & GitHub</span>
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="network" class="w-5 h-5"></i> Data Structures & Algorithms</span>
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="boxes" class="w-5 h-5"></i> Object-Oriented Programming</span>
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="shield-check" class="w-5 h-5"></i> Kali Linux & Ethical Hacking</span>
+                            <span class="text-white/60 font-medium text-lg flex items-center gap-2 whitespace-nowrap"><i data-lucide="server-cog" class="w-5 h-5"></i> REST APIs</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="experience" class="py-32 px-6 relative border-t border-white/5">
+            <div class="max-w-6xl mx-auto gs-reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white font-sans mb-20 tracking-tight">Experience & Leadership</h2>
+                
+                <div class="space-y-20 max-w-4xl relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/10 before:to-transparent">
+                    
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active hoverable">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-[#050505] text-accentCyan shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">
+                            <i data-lucide="briefcase" class="w-4 h-4"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-2xl bg-[#0d0d0d] border border-white/5 hover:border-white/10 transition-colors">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-white text-xl font-sans">Freelance Web Developer</h3>
+                            </div>
+                            <time class="text-accentCyan text-sm font-medium mb-4 block">Independent · Present</time>
+                            <p class="text-textMuted font-light text-sm leading-relaxed">Architecting and developing responsive web applications tailored to specific client requirements. Collaborating directly with stakeholders to iteratively improve functionality and business logic mapping.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active hoverable">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-[#050505] text-accentViolet shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">
+                            <i data-lucide="users" class="w-4 h-4"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-2xl bg-[#0d0d0d] border border-white/5 hover:border-white/10 transition-colors">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-white text-xl font-sans">Core Team Lead & Organizer</h3>
+                            </div>
+                            <time class="text-accentViolet text-sm font-medium mb-4 block">TEXUS'26 • Feb 2026</time>
+                            <p class="text-textMuted font-light text-sm leading-relaxed">Orchestrated a large-scale university technical festival. Directed technical branding, managed sponsorship documentation, and oversaw digital asset creation including 3D animations and web infrastructure.</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active hoverable">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-[#050505] text-blue-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">
+                            <i data-lucide="code" class="w-4 h-4"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-2xl bg-[#0d0d0d] border border-white/5 hover:border-white/10 transition-colors">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-white text-xl font-sans">Technical Member</h3>
+                            </div>
+                            <time class="text-blue-400 text-sm font-medium mb-4 block">GeeksforGeeks Student Chapter •2024-25 </time>
+                            <p class="text-textMuted font-light text-sm leading-relaxed">Active participant in collaborative programming environments, competitive coding contests, and hackathons. Fostering academic growth and peer-to-peer technical mentorship within the collegiate developer community.</p>
+                        </div>
+                    </div>
+
+                    <!-- <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active hoverable">
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-[#050505] text-emerald-400 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">
+                            <i data-lucide="globe" class="w-4 h-4"></i>
+                        </div>
+                        <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 rounded-2xl bg-[#0d0d0d] border border-white/5 hover:border-white/10 transition-colors">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-white text-xl font-sans">Executive Member</h3>
+                            </div>
+                            <time class="text-emerald-400 text-sm font-medium mb-4 block">Campus Life • Ongoing</time>
+                            <p class="text-textMuted font-light text-sm leading-relaxed">Key contributor to the premier and largest student-led organization on campus. Orchestrated community-building initiatives, managed collegiate events, and fostered student engagement through strategic cross-functional collaboration.</p>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="pt-40 pb-12 px-6 relative border-t border-white/5 overflow-hidden">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accentCyan/10 rounded-full blur-[150px] z-[-1] pointer-events-none"></div>
+            
+            <div class="max-w-4xl mx-auto text-center gs-reveal relative z-10">
+                <h2 class="text-5xl md:text-7xl font-bold mb-8 font-sans text-white tracking-tighter">Let's build <span class="gradient-text">together.</span></h2>
+                <p class="text-textMuted mb-12 text-lg md:text-xl font-light max-w-2xl mx-auto">Currently open for new engineering opportunities, collaborations, and discussions about technology.</p>
+                
+                <div class="magnetic">
+                    <a href="mailto:mohapatrarishiprakash@gmail.com" class="inline-flex items-center gap-3 px-10 py-5 rounded-full bg-white text-black font-semibold text-base hover:bg-gray-200 transition-colors duration-300 hoverable shadow-[0_0_40px_rgba(255,255,255,0.15)]">
+                        Reach Out via Email <i data-lucide="send" class="w-5 h-5"></i>
+                    </a>
+                </div>
+
+                <div class="mt-32 pt-10 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <p class="text-sm text-textMuted font-light">Rishi Prakash Mahapatra © 2026</p>
+                    <div class="flex gap-8 text-sm font-medium text-textMuted">
+                        <a href="https://www.linkedin.com/in/rishi-prakash-mohapatra-55b3a82b0/" target="_blank" class="hover:text-accentCyan transition-colors hoverable">LinkedIn</a>
+                        <a href="https://github.com/rishiprakash-dev" target="_blank" class="hover:text-white transition-colors hoverable">GitHub</a>
+                        <a href="https://www.instagram.com/rishi_prakash_06/?next=%2Fforeverveloura%2F" target="_blank" class="hover:text-white transition-colors hoverable">Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js"></script>
+
+    <script>
+        // 1. Initialize Icons
+        lucide.createIcons();
+
+        // 2. Lenis Smooth Scrolling
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+            infinite: false,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 3. Custom Dual Cursor
+        const cursor = document.getElementById('custom-cursor');
+        const follower = document.getElementById('custom-cursor-follower');
+        const hoverables = document.querySelectorAll('.hoverable, a, button');
+
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            gsap.to(cursor, { x: mouseX, y: mouseY, duration: 0.1, ease: "power2.out" });
+        });
+
+        gsap.ticker.add(() => {
+            followerX += (mouseX - followerX) * 0.15;
+            followerY += (mouseY - followerY) * 0.15;
+            gsap.set(follower, { x: followerX, y: followerY });
+        });
+
+        hoverables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovering');
+                gsap.to(follower, { scale: 1.5, opacity: 0, duration: 0.3 });
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovering');
+                gsap.to(follower, { scale: 1, opacity: 1, duration: 0.3 });
+            });
+        });
+
+        // 4. Magnetic Buttons
+        const magnetics = document.querySelectorAll('.magnetic');
+        magnetics.forEach((btn) => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const h = rect.width / 2;
+                const v = rect.height / 2;
+                const x = e.clientX - rect.left - h;
+                const y = e.clientY - rect.top - v;
+                gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.5, ease: "power3.out" });
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+
+        // 5. GSAP Scroll & Hero Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        const heroTimeline = gsap.timeline();
+        heroTimeline.fromTo(".hero-anim", 
+            { y: 100, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1.2, stagger: 0.15, ease: "power4.out", delay: 0.2 }
+        );
+
+        const revealElements = document.querySelectorAll('.gs-reveal');
+        revealElements.forEach((el) => {
+            gsap.fromTo(el, 
+                { autoAlpha: 0, y: 40, scale: 0.98 }, 
+                {
+                    duration: 1.2, autoAlpha: 1, y: 0, scale: 1, ease: "power3.out",
+                    scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" }
+                }
+            );
+        });
+    </script>
+</body>
+</html>
